@@ -1,0 +1,64 @@
+<!doctype html>
+<head>
+	<title>Select Example</title>
+	<link rel="stylesheet" href="select-form.css">
+</head>
+<body>
+	<div class="container">
+		<h1 style="margin-top: 40px;">React Select</h1>
+		<h2></h2>
+		<div></div>
+		<div id="select" style="margin: 20px 0;"></div>
+		<div class="footer">
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<script src="https://unpkg.com/react@0.14.2/dist/react.min.js"></script>
+	<script src="https://unpkg.com/react-dom@0.14.2/dist/react-dom.min.js"></script>
+	<script src="https://unpkg.com/three.js@0.73.0/build/three.min.js"></script>
+	<script src="https://unpkg.com/classnames@2.0.0/index.js"></script>
+	<script src="https://unpkg.com/react-input-autosize@0.6.3/dist/react-input-autosize.min.js"></script>
+	<script src="select-form.js"></script>
+	<script>
+		var Container = React.createClass({
+			getInitialState () {
+				return { value: '' };
+			},
+     		load : function(input, callback) {
+    			$.ajax({
+    				type: 'GET',
+				    url: "http://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
+				    success: function(response){
+				    	callback(null, {options: response.persons});
+				    },
+				    error: function(response){
+				    	console.log(response);
+				    }
+				});
+		     },
+		    updateValue : function(value) {
+		      this.setState({ value: value });
+		    },
+			render () {
+				return React.createElement(Select.Async, {
+					multi: true,
+			        autoBlur: true,
+			        backspaceRemoves: false,
+			        clearable: false,
+			        scrollMenuIntoView: false,
+			        autoload: false,
+			        value: this.state.value,
+			        loadOptions: this.load,
+			        onChange: this.updateValue,
+			        labelKey: 'fullName',
+			        valueKey: 'personId'
+				});
+			}
+		});
+		React.render(
+			React.createElement(Container),
+			document.getElementById('select')
+		);
+	</script>
+</body>
