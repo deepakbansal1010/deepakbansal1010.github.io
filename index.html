@@ -27,7 +27,7 @@
      		load : function(input, callback) {
     			$.ajax({
     				type: 'GET',
-				    url: "http://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
 				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
 				    success: function(response){
 				    	callback(null, {options: response.persons});
