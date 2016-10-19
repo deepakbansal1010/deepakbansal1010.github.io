@@ -9,7 +9,7 @@
 		<h2></h2>
 		<div></div>
 		<div id="select" style="margin: 20px 0;"></div>
-		<div class="footer">
+		<div id="firmMemberSelect">
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
@@ -56,9 +56,50 @@
 				});
 			}
 		});
+		var SingleSelectContainer = React.createClass({
+			getInitialState () {
+				return { value: '' };
+			},
+     		load : function(input, callback) {
+    			$.ajax({
+    				type: 'GET',
+				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
+				    success: function(response){
+				    	callback(null, {options: response.persons});
+				    },
+				    error: function(response){
+				    	console.log(response);
+				    }
+				});
+		     },
+		    updateValue : function(value) {
+		      this.setState({ value: value });
+		    },
+		    handleChange : function(){
+		      this.setState({checked:true})
+		    },
+			render () {
+				return React.createElement(Select.Async, {
+			        backspaceRemoves: false,
+			        clearable: false,
+			        scrollMenuIntoView: false,
+			        autoload: false,
+			        value: this.state.value,
+			        loadOptions: this.load,
+			        onChange: this.updateValue,
+			        labelKey: 'fullName',
+			        valueKey: 'personId'
+				});
+			}
+		});
 		React.render(
 			React.createElement(Container),
 			document.getElementById('select')
+		);
+		React.render(
+			React.createElement(SingleSelectContainer),
+			document.getElementById('firmMemberSelect')
 		);
 	</script>
 </body>
