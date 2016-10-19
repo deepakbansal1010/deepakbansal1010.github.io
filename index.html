@@ -22,7 +22,7 @@
 	<script>
 		var Container = React.createClass({
 			getInitialState () {
-				return { value: '' };
+				return { value: 'al' };
 			},
      		load : function(input, callback) {
     			$.ajax({
@@ -42,8 +42,7 @@
 		    },
 			render () {
 				return React.createElement(Select.Async, {
-					multi: true,
-			        //autoBlur: true,
+				 multi: true,
 			        backspaceRemoves: false,
 			        clearable: false,
 			        scrollMenuIntoView: false,
@@ -58,7 +57,7 @@
 		});
 		var SingleSelectContainer = React.createClass({
 			getInitialState () {
-				return { value: '' };
+				return { value: 'A'};
 			},
      		load : function(input, callback) {
     			$.ajax({
@@ -76,21 +75,35 @@
 		    updateValue : function(value) {
 		      this.setState({ value: value });
 		    },
-		    handleChange : function(){
-		      this.setState({checked:true})
-		    },
+		    toggleCheckbox (e) {
+		if(!this.state.disabled)
+		this.setState({disabled:true});
+		else
+		this.setState({disabled:false})
+	},
 			render () {
-				return React.createElement(Select.Async, {
+				return React.createElement("div",{classname
+:"firm-member-select"},React.createElement(Select.Async, {
 			        backspaceRemoves: false,
 			        clearable: false,
 			        scrollMenuIntoView: false,
-			        autoload: false,
-			        value: this.state.value,
+			        autoload: true,
+			        value: 'Al',
 			        loadOptions: this.load,
 			        onChange: this.updateValue,
 			        labelKey: 'fullName',
-			        valueKey: 'personId'
-				});
+			        valueKey: 'personId',
+				disabled:this.state.disabled
+				}),React.createElement(
+			"label",
+			{ className: "checkbox", style: { marginLeft: 10 } },
+			React.createElement("input", { type: "checkbox", className: "checkbox-control", name: "disabled", checked: this.state.disabled, onChange: this.toggleCheckbox }),
+			React.createElement(
+				"span",
+				{ className: "checkbox-label" },
+				"Disabled"
+			)
+		));
 			}
 		});
 		React.render(
