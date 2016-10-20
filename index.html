@@ -6,19 +6,34 @@
 <body>
 	<div class="container">
 		<h1 style="margin: 20px 0px;">React Select</h1>
-		<hr/>
-		<h4>React Multi-Select</h4>
-		<div id="select" style="margin: 10px 0;"></div>
+			<hr/>
+		<div class="multi-select-container">
+			<div class="fleft">
+			<div>
+			<h4>React Multi-Select</h4>
+			<div id="select" style="margin: 10px 0;"></div>
+
+			<h4>React Multi Select <small><i>Perform operation on closing the menu</i></small></h4>
+			<div id="multiSelectBlur" style="margin: 10px 0;">
+			</div>	
 		
-		<h4>React Single Select <small></small></h4>
-		<div id="firmMemberSelect" style="margin: 10px 0;">
+			<h4>React Multi Select <small><i>Select on tab disabled</i></small></h4>
+			<div id="multiTabDisabled" style="margin: 10px 0;">
+			</div>
 		</div>
-		<h4>React Single Select <small><i>With Disable Option</i></small></h4>
-		<div id="firmMemberSelectDisabled" style="margin: 10px 0;">
+			
+		<div class="single-select-container">
+			<h4>React Single Select <small></small></h4>
+			<div id="firmMemberSelect" style="margin: 10px 0;">
+			</div>
+			<h4>React Single Select <small><i>With Disable Option</i></small></h4>
+			<div id="firmMemberSelectDisabled" style="margin: 10px 0;">
+			</div>
+			<h4>React Single Select <small><i>Email ids of the employees</i></small></h4>
+			<div id="firmMemberSelectEmail" style="margin: 10px 0;">
 		</div>
-		<h4>React Single Select <small><i>Email ids of the employees</i></small></h4>
-		<div id="firmMemberSelectEmail" style="margin: 10px 0;">
 		</div>
+		
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 	<script src="https://unpkg.com/react@0.14.2/dist/react.min.js"></script>
@@ -63,9 +78,9 @@
 				});
 			}
 		});
-		var SingleSelectContainerDisabled = React.createClass({
+		var ContainerMultiBlur = React.createClass({
 			getInitialState () {
-				return { value: ''};
+				return { value: 'al' };
 			},
      		load : function(input, callback) {
      			input = input == "" ? "a" : input; 
@@ -74,7 +89,83 @@
 				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
 				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
 				    success: function(response){
-					console.log(response)
+				    	callback(null, {options: response.persons});
+				    },
+				    error: function(response){
+				    	console.log(response);
+				    }
+				});
+		     },
+		    updateValue : function(value) {
+		      this.setState({ value: value });
+		    },
+		    callOnBlur : function(event) {
+			alert(event);
+		    },
+			render () {
+				return React.createElement(Select.Async, {
+				 	multi: true,
+				onBlur: this.callOnBlur,
+			        backspaceRemoves: false,
+			        clearable: false,
+			        scrollMenuIntoView: false,
+			        value: this.state.value,
+			        loadOptions: this.load,
+			        onChange: this.updateValue,
+			        labelKey: 'fullName',
+			        valueKey: 'personId'
+				});
+			}
+		});
+		var ContainerTabDisabled = React.createClass({
+			getInitialState () {
+				return { value: 'al' };
+			},
+     		load : function(input, callback) {
+     			input = input == "" ? "a" : input; 
+    			$.ajax({
+    				type: 'GET',
+				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
+				    success: function(response){
+				    	callback(null, {options: response.persons});
+				    },
+				    error: function(response){
+				    	console.log(response);
+				    }
+				});
+		     },
+		    updateValue : function(value) {
+		      this.setState({ value: value });
+		    },
+			render () {
+				return React.createElement(Select.Async, {
+				 	multi: true,
+				tabSelectValue : false,
+			        backspaceRemoves: false,
+			        clearable: false,
+			        scrollMenuIntoView: false,
+			        value: this.state.value,
+			        loadOptions: this.load,
+			        onChange: this.updateValue,
+			        labelKey: 'fullName',
+			        valueKey: 'personId'
+				});
+			}
+		});
+		
+
+		var SingleSelectContainerDisabled = React.createClass({
+			getInitialState () {
+				return { value: ''};
+			},
+     		load : function(input, callback) {
+     			input = input == "" ? "a" : input.split('_').join(' '); 
+    			$.ajax({
+    				type: 'GET',
+				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
+				    success: function(response){
 				    	callback(null, {options: response.persons});
 				    },
 				    error: function(response){
@@ -150,7 +241,7 @@
 				return { value: ''};
 			},
      		load : function(input, callback) {
-     			input = input == "" ? "a" : input; 
+     			input = input == "" ? "a" : input.split('_').join(' '); 
     			$.ajax({
     				type: 'GET',
 				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
@@ -196,6 +287,14 @@
 		React.render(
 			React.createElement(SingleSelectContainerEmail),
 			document.getElementById('firmMemberSelectEmail')
+		);
+		React.render(
+			React.createElement(ContainerMultiBlur),
+			document.getElementById('multiSelectBlur')
+		);
+		React.render(
+			React.createElement(ContainerTabDisabled),
+			document.getElementById('multiTabDisabled')
 		);
 	</script>
 </body>
