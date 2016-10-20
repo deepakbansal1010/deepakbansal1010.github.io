@@ -10,8 +10,14 @@
 		<h4>React Multi-Select</h4>
 		<div id="select" style="margin: 10px 0;"></div>
 		
-		<h4>React Single Select <small><i>With Disable Option</i></small></h4>
+		<h4>React Single Select <small></small></h4>
 		<div id="firmMemberSelect" style="margin: 10px 0;">
+		</div>
+		<h4>React Single Select <small><i>With Disable Option</i></small></h4>
+		<div id="firmMemberSelectDisabled" style="margin: 10px 0;">
+		</div>
+		<h4>React Single Select <small><i>Email ids of the employees</i></small></h4>
+		<div id="firmMemberSelectEmail" style="margin: 10px 0;">
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
@@ -57,7 +63,7 @@
 				});
 			}
 		});
-		var SingleSelectContainer = React.createClass({
+		var SingleSelectContainerDisabled = React.createClass({
 			getInitialState () {
 				return { value: ''};
 			},
@@ -68,6 +74,7 @@
 				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
 				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
 				    success: function(response){
+					console.log(response)
 				    	callback(null, {options: response.persons});
 				    },
 				    error: function(response){
@@ -103,6 +110,77 @@
 					React.createElement("span",{ className: "checkbox-label" },"Disabled")));
 			}
 		});
+		var SingleSelectContainer = React.createClass({
+			getInitialState () {
+				return { value: ''};
+			},
+     		load : function(input, callback) {
+     			input = input == "" ? "a" : input; 
+    			$.ajax({
+    				type: 'GET',
+				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
+				    success: function(response){
+					console.log(response)
+				    	callback(null, {options: response.persons});
+				    },
+				    error: function(response){
+				    	console.log(response);
+				    }
+				});
+		     },
+		    updateValue : function(value) {
+		      this.setState({ value: value });
+		    },
+			render () {
+				return React.createElement(Select.Async, {
+				        backspaceRemoves: false,
+				        clearable: false,
+				        scrollMenuIntoView: false,
+				        autoload: true,
+				        value: this.state.value,
+				        loadOptions: this.load,
+				        onChange: this.updateValue,
+				        labelKey: 'fullName',
+				        valueKey: 'personId'								});
+			}
+		});
+		var SingleSelectContainerEmail = React.createClass({
+			getInitialState () {
+				return { value: ''};
+			},
+     		load : function(input, callback) {
+     			input = input == "" ? "a" : input; 
+    			$.ajax({
+    				type: 'GET',
+				    url: "https://qa-api.mckinsey.com/v1/persons/autosuggest?limit=30&q=" + input,
+				    headers: {"Apikey": "1695-f6baf186-533a-4385-ade5-b37092578bb4"},
+				    success: function(response){
+					console.log(response)
+				    	callback(null, {options: response.persons});
+				    },
+				    error: function(response){
+				    	console.log(response);
+				    }
+				});
+		     },
+		    updateValue : function(value) {
+		      this.setState({ value: value });
+		    },
+			render () {
+				return React.createElement(Select.Async, {
+				        backspaceRemoves: false,
+				        clearable: false,
+				        scrollMenuIntoView: false,
+				        autoload: true,
+				        value: this.state.value,
+				        loadOptions: this.load,
+				        onChange: this.updateValue,
+				        labelKey: 'email',
+				        valueKey: 'personId'								});
+			}
+		});
+
 		React.render(
 			React.createElement(Container),
 			document.getElementById('select')
@@ -110,6 +188,14 @@
 		React.render(
 			React.createElement(SingleSelectContainer),
 			document.getElementById('firmMemberSelect')
+		);
+		React.render(
+			React.createElement(SingleSelectContainerDisabled),
+			document.getElementById('firmMemberSelectDisabled')
+		);
+		React.render(
+			React.createElement(SingleSelectContainerEmail),
+			document.getElementById('firmMemberSelectEmail')
 		);
 	</script>
 </body>
