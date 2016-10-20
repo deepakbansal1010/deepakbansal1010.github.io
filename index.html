@@ -42,7 +42,7 @@
 		    },
 			render () {
 				return React.createElement(Select.Async, {
-				 multi: true,
+				 	multi: true,
 			        backspaceRemoves: false,
 			        clearable: false,
 			        scrollMenuIntoView: false,
@@ -57,7 +57,7 @@
 		});
 		var SingleSelectContainer = React.createClass({
 			getInitialState () {
-				return { value: 'A'};
+				return { value: ''};
 			},
      		load : function(input, callback) {
     			$.ajax({
@@ -76,34 +76,28 @@
 		      this.setState({ value: value });
 		    },
 		    toggleCheckbox (e) {
-		if(!this.state.disabled)
-		this.setState({disabled:true});
-		else
-		this.setState({disabled:false})
-	},
+				if(!this.state.disabled)
+					this.setState({disabled:true});
+				else
+					this.setState({disabled:false})
+			},
 			render () {
-				return React.createElement("div",{classname
-:"firm-member-select"},React.createElement(Select.Async, {
-			        backspaceRemoves: false,
-			        clearable: false,
-			        scrollMenuIntoView: false,
-			        autoload: true,
-			        value: 'Al',
-			        loadOptions: this.load,
-			        onChange: this.updateValue,
-			        labelKey: 'fullName',
-			        valueKey: 'personId',
-				disabled:this.state.disabled
-				}),React.createElement(
-			"label",
-			{ className: "checkbox", style: { marginLeft: 10 } },
-			React.createElement("input", { type: "checkbox", className: "checkbox-control", name: "disabled", checked: this.state.disabled, onChange: this.toggleCheckbox }),
-			React.createElement(
-				"span",
-				{ className: "checkbox-label" },
-				"Disabled"
-			)
-		));
+				return React.createElement("div",{classname:"firm-member-select"},
+					React.createElement(Select.Async, {
+				        backspaceRemoves: false,
+				        clearable: false,
+				        scrollMenuIntoView: false,
+				        autoload: true,
+				        value: 'Al',
+				        loadOptions: this.load,
+				        onChange: this.updateValue,
+				        labelKey: 'fullName',
+				        valueKey: 'personId',
+						disabled:this.state.disabled
+					}),
+					React.createElement("label",{ className: "checkbox", style: { marginLeft: 10 } },
+					React.createElement("input", { type: "checkbox", className: "checkbox-control", name: "disabled", checked: this.state.disabled, onChange: this.toggleCheckbox }),
+					React.createElement("span",{ className: "checkbox-label" },"Disabled")));
 			}
 		});
 		React.render(
