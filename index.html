@@ -2,36 +2,57 @@
 <head>
 	<title>Select Example</title>
 	<link rel="stylesheet" href="select-form.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
+	<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<div class="container">
 		<h1 style="margin: 20px 0px;">React Select</h1>
 			<hr/>
-		<div class="multi-select-container">
-			<div class="fleft">
-			<div>
-			<h4>React Multi-Select</h4>
-			<div id="select" style="margin: 10px 0;"></div>
-
-			<h4>React Multi Select <small><i>Perform operation on closing the menu</i></small></h4>
+		<div class="multi-select-container row">
+			<div class="col-sm-4">
+				<h4>React Multi-Select</h4>
+				<div id="select" style="margin: 10px 0;"></div>
+			</div>
+			
+			<div class = "col-sm-4">
+				<h4>React Multi Select <small><i>Perform operation on closing the menu</i></small></h4>
 			<div id="multiSelectBlur" style="margin: 10px 0;">
 			</div>	
-		
-			<h4>React Multi Select <small><i>Select on tab disabled</i></small></h4>
+			</div>
+			
+			<div class="col-sm-4">
+				<h4>React Multi Select <small><i>Select on tab disabled</i></small></h4>
 			<div id="multiTabDisabled" style="margin: 10px 0;">
 			</div>
+			</div>
+			
 		</div>
 			
-		<div class="single-select-container">
-			<h4>React Single Select <small></small></h4>
-			<div id="firmMemberSelect" style="margin: 10px 0;">
+		<div class="single-select-container row">
+			<div class="col-sm-4">
+				<h4>React Single Select <small></small></h4>
+				<div id="firmMemberSelect" style="margin: 10px 0;">
+				</div>
 			</div>
-			<h4>React Single Select <small><i>With Disable Option</i></small></h4>
+			<div class="col-sm-4">
+				<h4>React Single Select <small><i>With Disable Option</i></small></h4>
 			<div id="firmMemberSelectDisabled" style="margin: 10px 0;">
 			</div>
-			<h4>React Single Select <small><i>Email ids of the employees</i></small></h4>
+			</div>
+			<div class="col-sm-4">
+				<h4>React Single Select <small><i>Email ids of the employees</i></small></h4>
 			<div id="firmMemberSelectEmail" style="margin: 10px 0;">
 		</div>
+			</div>
+			
 		</div>
 		
 	</div>
